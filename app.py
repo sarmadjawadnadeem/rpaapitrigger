@@ -15,7 +15,7 @@ UIPATH_API_HEADERS = {
 def trigger_process():
     try:
         # Send request to UiPath API
-        response = requests.get(UIPATH_API_URL, headers=UIPATH_API_HEADERS, json={"some": "payload"})
+        response = requests.post(UIPATH_API_URL, headers=UIPATH_API_HEADERS, json={"some": "payload"})
 
         if response.status_code == 200:
             message = "Process triggered successfully!"
