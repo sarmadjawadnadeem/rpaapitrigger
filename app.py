@@ -19,12 +19,12 @@ def trigger_process():
     Details = request.args.get('Details') 
 
     payload = {
-            "startInfo": {
+         
                 "username": '"'+username+'"',
                 "Strategy": "Specific",
                 "stepnumber": '"'+stepnumber+'"',
                 "Details": '"'+Details+'"'
-            }
+            
         }
 
     try:
