@@ -20,10 +20,10 @@ def trigger_process():
 
     payload = {
          
-                "username": '"'+username+'"',
+                "username": username,
                 "Strategy": "Specific",
-                "stepnumber": '"'+stepnumber+'"',
-                "Details": '"'+Details+'"'
+                "stepnumber": stepnumber,
+                "Details": Details
             
         }
 
