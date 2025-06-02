@@ -13,9 +13,23 @@ UIPATH_API_HEADERS = {
 
 @app.route('/trigger-process')
 def trigger_process():
+
+    username = request.args.get('username')
+    stepnumber = request.args.get('stepnumber')
+    Details = request.args.get('Details') 
+
+    payload = {
+            "startInfo": {
+                "username": username,
+                "Strategy": "Specific",
+                "stepnumber": stepnumber,
+                "Details": Details
+            }
+        }
+
     try:
         # Send request to UiPath API
-        response = requests.post(UIPATH_API_URL, headers=UIPATH_API_HEADERS, json={"some": "payload"})
+        response = requests.post(UIPATH_API_URL, headers=UIPATH_API_HEADERS, json=payload)
 
         if response.status_code == 200:
             message = "Process triggered successfully!"
@@ -27,14 +41,28 @@ def trigger_process():
 
     # Auto-close HTML
     html = f"""
-    <html>
-        <body>
-            <p>{message}</p>
-            <script>
-                setTimeout(() => window.close(), 2000);
-            </script>
-        </body>
-    </html>
+   <html>
+  <body style="font-family: Arial, sans-serif; background: #f0f4f8; color: #333; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+    <div style="background: white; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+      <p>{message}</p>
+      <div style="margin-top: 10px; font-size: 14px; color: #555;">
+        Closing in <span id="countdown">2</span> seconds...
+      </div>
+    </div>
+    <script>
+      let seconds = 2;
+      const countdownElem = document.getElementById('countdown');
+      const interval = setInterval(() => {{
+        seconds -= 1;
+        countdownElem.textContent = seconds;
+        if (seconds <= 0) {{
+          clearInterval(interval);
+          window.close();
+        }}
+      }}, 1000);
+    </script>
+  </body>
+</html>
     """
     return render_template_string(html)
 
